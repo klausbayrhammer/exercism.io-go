@@ -1,14 +1,18 @@
 package isogram
 
-import "strings"
+import (
+	"strings"
+	"unicode"
+)
 
 func IsIsogram(input string) bool {
 	lowercaseInput := strings.ToLower(input)
-	ignoreCharsReplacer := strings.NewReplacer("-", "", " ", "")
-	inputWithoutSpecialChars := ignoreCharsReplacer.Replace(lowercaseInput)
 
-	for index, letterToTest := range inputWithoutSpecialChars {
-		for _, letterInRemainingString := range inputWithoutSpecialChars[index+1:] {
+	for index, letterToTest := range lowercaseInput {
+		if !unicode.IsLetter(letterToTest) {
+			continue
+		}
+		for _, letterInRemainingString := range lowercaseInput[index+1:] {
 			if letterToTest == letterInRemainingString {
 				return false
 			}
